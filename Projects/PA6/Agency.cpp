@@ -135,6 +135,7 @@ Agency::Agency() {
 	this->inventory = new Car[100];
 }
 
+// Agency copy constructor
 Agency::Agency(const Agency &inp) {
 	int* tempPtr1 = inp.zipcode;
 	int* tempPtr2;
@@ -164,6 +165,7 @@ Agency::Agency(const Agency &inp) {
 	carPtr2 = NULL;
 }
 
+// Agency destructor
 Agency::~Agency() {
 	delete [] this->name;
 	delete [] this->zipcode;
@@ -174,6 +176,8 @@ Agency::~Agency() {
 	this->inventory = NULL;
 }
 
+// reads in data by reading agency name, zipcode and then the cars in order
+// uses temp to manipulate the data
 void Agency::readInData(char* fileName) {
 	char* tempString = new char[100];
 
@@ -198,6 +202,7 @@ void Agency::readInData(char* fileName) {
 	charPtr1 = tempString;
 	intPtr1 = this->zipcode;
 
+	// zipcode was placed by subtracting ascii values and then inserting into element
 	for(int i = 0; i < 5; i++) {
 		*intPtr1++ = *charPtr1++ - '0';
 	}
@@ -244,6 +249,7 @@ void Agency::readInData(char* fileName) {
 	carPtr1 = NULL;
 }
 
+// prints agency and then the cars in order
 void Agency::print() const {
 
 	Car* carPtr1 = this->inventory;
@@ -263,6 +269,7 @@ void Agency::print() const {
 	intPtr1 = NULL;
 }
 
+// prints all available cars in the agency
 void Agency::printAvailableCars() const {
 	Car* carPtr1 = this->inventory;
 
@@ -276,6 +283,7 @@ void Agency::printAvailableCars() const {
 	carPtr1 = NULL;
 }
 
+// finds the most expensive car in the agency
 void Agency::findMostExpensive() const {
 	Car* carPtr1 = this->inventory;
 
@@ -298,6 +306,8 @@ void Agency::findMostExpensive() const {
 	carPtr1 = NULL;
 }
 
+// estimates the cost by multiplying the amount of days and the price of the car
+// takes the element number and the number of days in the parameter
 float Agency::estimateCost(int carNumber, int numOfDays) const {
 	float tempCost = 0.0;
 
@@ -312,6 +322,8 @@ float Agency::estimateCost(int carNumber, int numOfDays) const {
 	return tempCost;
 }
 
+// bubble sort
+// sorts the inventory by make
 void Agency::sortByMake() {
 	bool swapped = true;
 	Car temp;
@@ -357,6 +369,8 @@ void Agency::sortByMake() {
 	carPtr2 = NULL;
 }
 
+// insertion sort
+// sorts the inventory by price
 void Agency::sortByPrice() {
 	Car* carPtr1 = this->inventory;
 	Car temp;
@@ -403,6 +417,9 @@ void Agency::sortByPrice() {
 	carPtr1 = NULL;
 }
 
+// linear search
+// searches the inventory for make
+// if the same make is found, it is printed
 void Agency::searchByMake(char* inp) const {
 
 	Car* carPtr1 = this->inventory;
