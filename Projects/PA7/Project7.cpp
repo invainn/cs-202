@@ -13,21 +13,13 @@ Polynomial::Polynomial() {
 // forgot we can use bracket notation
 // i don't wanna change it :(
 Polynomial::Polynomial(int deg, int* max) {
-	int* tempPtr = this->coeffs
-	int* tempMax = max;
-
 	this->maxDeg = deg;
-
-	this->coeffs = new int[this->maxDeg];
-
-	for(int i = 0; i < deg; i++) {
-		*tempPtr = *tempMax;
-		tempPtr++;
-		tempMax++;
+	
+	this->coeffs = new int[this->maxDeg+1];
+	
+	for(int i = 0; i < this->maxDeg+1; i++) {
+		this->coeffs[i] = max[i];
 	}
-
-	tempPtr = NULL;
-	tempMax = NULL;
 
 }
 
@@ -59,10 +51,14 @@ Polynomial::~Polynomial() {
 // fix this, this->coeffs is reversed
 int Polynomial::solve(int x) {
 	int result = 0;
+	int pwr = this->maxDeg;
 
-	for(int i = 0; i < this->maxDeg; i++) {
-		if(this->coeffs[i] != 0) {
-			result += (this->coeffs[i]*(pow(x, this->maxDeg-i)));
+	for(int i = 0; i < this->maxDeg+1; i++) {
+		if(pow == 0) {
+			result += this->coeffs[i];
+		} else {
+			result += (this->coeffs[i]*pow(x, pwr));
+			pwr--;
 		}
 	}
 
@@ -157,6 +153,25 @@ Polynomial& Polynomial:: operator-(const Polynomial& src) {
 	}
 }
 
+ostream& operator<<(ostream& os, const Polynomial& src) {
+	for(int i = 0; i < src.maxDeg+1; i++) {
+		cout << src.coeffs[i] << " ";
+	}
+	
+	cout << endl;
+	
+	return os;
+}
+
+istream& operator>>(istream& dataFile, Polynomial& src) {
+	dataFile >> src.maxDeg;
+	
+	for(int i = 0; i < src.maxDeg+1; i++) {
+		dataFile >>src.coeffs[i];
+	}
+	
+	return dataFile;
+}
 
 
 // when writing stream in function, use max degree to count how many coefficients
