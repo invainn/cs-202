@@ -1,0 +1,214 @@
+#include <iostream>
+using namespace std;
+
+template <typename T>
+class ListArray {
+     public:
+        ListArray(int sizeArr = 10) {
+            this->data = new T[sizeArr];
+            this->actual = 0;
+            this->cursor = -1;
+            this->size = sizeArr;
+        }
+
+        ListArray(const ListArray<T>& src) {
+            this->actual = src.actual;
+            this->cursor = src.cursor;
+            this->size = src.size;
+
+            this->data = new T[src.size];
+            for(int i = 0; i < src.actual; i++) {
+                this->data[i] = src.data[i];
+            }
+        }
+
+        ~ListArray() {
+            delete [] this->data;
+            this->data = NULL;
+        }
+
+        bool insertAfter(const T& src) {
+            if(!this->isFull()) {
+                if(this->isEmpty()) {
+                    this->actual++;
+                    this->cursor++;
+                    this->data[this->cursor] = src;
+
+                    return true;
+                } else {
+                    int temp = this->actual;
+                    for(int i = temp; i > this->cursor-1; i--) {
+                        this->data[temp] = this->data[temp-1];
+                    }
+
+                    this->data[temp] = src;
+                    this->actual++;
+                    this->cursor++;
+
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        bool insertBefore(const T& src) {
+            if(!this->isFull()) {
+                if(this->isEmpty()) {
+                    this->actual++;
+                    this->cursor++;
+                    this->data[cursor] = src;
+
+                    return true;
+                }
+                for(int i = this->actual; i > this->cursor-1; i--) {
+                    this->data[i] = this->data[i-1];
+                }
+                this->actual++;
+                this->data[cursor] = src;
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool get(T& out) const {
+            if(!this->isEmpty()) {
+                out = this->data[cursor];
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool remove(T& out) {
+            if(!this->isEmpty()) {
+                out = this->data[cursor];
+
+                if(this->cursor == this->size-1) {
+                    this->cursor = 0;
+                    this->actual--;
+                    return true;
+                } else {
+                    for(int i = this->cursor; i < this->size-1; i++) {
+                        this->data[i] = this->data[i+1];
+                    }
+                    this->actual--;
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        void clear() {
+            if(!this->isEmpty()) {
+                this->actual = 0;
+                this->cursor = -1;
+            } 
+        }
+
+        bool goToBeginning() {
+            if(!this->isEmpty() && this->cursor != 0) {
+                this->cursor = 0;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool goToEnd() {
+            if(!this->isEmpty() && this->cursor != this->actual-1) {
+                this->cursor = this->actual-1;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool goToNext() {
+            if(!this->isEmpty() && this->cursor != this->actual-1) {
+                this->cursor++;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool goToPrior() {
+            if(!this->isEmpty() && this->cursor != 0) {
+                this->cursor--;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool isEmpty() const {
+            if(this->cursor == -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        bool isFull() const {
+            if(this->actual == this->size) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        ListArray<T>& operator=(const ListArray<T>& src) {
+            if(this != &src) {
+                if(this->isEmpty()) {
+                    this->cursor = src.cursor;
+                    this->actual = src.actual;
+                    this->size = src.size;
+
+                    this->data = new T[src.size];
+
+                    for(int i = 0; i < src.actual; i++) {
+                        this->data[i] = src.data[i];
+                    }
+                    return *this;
+                } else {
+                    this->cursor = src.cursor;
+                    this->actual = src.actual;
+                    this->size = src.size;
+
+                    delete [] this->data;
+                    this->data = new T[src.size];
+
+                    for(int i = 0; i < src.actual; i++) {
+                        this->data[i] = src.data[i];
+                    }
+                    return *this;
+                }
+            } else {
+                return *this;
+            }
+        }
+
+        friend ostream& operator << (ostream& os, const ListArray<T>& src) {
+            for(int i = 0; i < src.actual; i++) {
+                if(src.data[src.cursor] == src.data[i]) {
+                    cout << "[" << src.data[i] << "] ";
+                } else {
+                    cout << src.data[i] << " ";
+                }
+            }
+
+            cout << endl;
+
+            return os;
+        }
+
+private:
+    T *data;
+    int cursor;
+    int actual;
+    int size;
+};

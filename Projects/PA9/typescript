@@ -1,0 +1,27 @@
+Script started on Fri 13 Nov 2015 10:29:37 PM PST
+]0;Project 9invainn@work:~/cs202projects/Project 9$ g++ main.cpp -o stack
+]0;Project 9invainn@work:~/cs202projects/Project 9$ ./stack
+
+
+Integer Stack: 
+Testing Int Stack Insertion Operator: 4 3 2 1 0 
+[1] 
+[2] 1 
+[1] 
+[5] 1 
+[4] 5 1 
+
+
+String Stack: 
+Testing String Stack Insertion Operator: c b a 
+[orange] 
+[empty stack] 
+[dog] 
+[apple] dog 
+[dog] 
+[cat] dog 
+
+
+]0;Project 9invainn@work:~/cs202projects/Project 9$ exit
+
+Script done on Fri 13 Nov 2015 10:29:49 PM PST

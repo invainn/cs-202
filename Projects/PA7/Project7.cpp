@@ -10,8 +10,6 @@ Polynomial::Polynomial() {
 	this->coeffs = NULL;
 }
 
-// forgot we can use bracket notation
-// i don't wanna change it :(
 Polynomial::Polynomial(int deg, int* max) {
 	this->maxDeg = deg;
 	
